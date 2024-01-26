@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Axios from "axios";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+  const [category, setCategory] = useState("")
+
+const fetchData = (excuse) =>{
+  Axios.get(`https://excuser-three.vercel.app/v1/excuse/${excuse}`).then((res) =>{
+    setCategory(res.data[0].excuse);
+  }
   );
+}
+
+  return <div className="App">
+    <h1>Generate an excuse</h1>
+    <button onClick={ () =>{ fetchData("party")}}>Party </button>
+    <button onClick={ () =>{ fetchData("gaming")}}>Gaming</button>
+    <button onClick={ () =>{ fetchData("family")}}>Family</button>
+   <p> {category}</p>  
+  </div>;
 }
 
 export default App;
